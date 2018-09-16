@@ -58,12 +58,10 @@ public class Lesson {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Lesson{");
-        sb.append("id=").append(id);
-        sb.append(", startDateTime=").append(startDateTime);
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", duration=").append(duration);
-        sb.append('}');
-        return sb.toString();
+        return "Lesson{" + "id=" + id +
+                ", startDateTime=" + startDateTime +
+                ", description='" + description + '\'' +
+                ", duration=" + duration +
+                '}';
     }
 }
