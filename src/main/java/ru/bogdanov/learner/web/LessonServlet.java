@@ -2,6 +2,7 @@ package ru.bogdanov.learner.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.bogdanov.learner.util.LessonUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,12 +13,13 @@ import java.io.IOException;
 /**
  * Denis, 16.09.2018
  */
-public class UserServlet extends HttpServlet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServlet.class);
+public class LessonServlet extends HttpServlet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LessonServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("forward to users");
-        request.getRequestDispatcher("/users.jsp").forward(request, response);
+        LOGGER.info("getAll");
+        request.setAttribute("lessons", LessonUtil.getWithGoal(LessonUtil.LESSONS, LessonUtil.DEFAULT_DAILY_GOAL));
+        request.getRequestDispatcher("/lessons.jsp").forward(request, response);
     }
 }

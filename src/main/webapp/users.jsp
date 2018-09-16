@@ -6,9 +6,12 @@
 </head>
 <body>
 
-<h1>Users</h1>
+<div>
+  <h1>Users</h1>
 
-<p><a href="index.html">Home</a></p>
+  <p><a href="index.html">Home</a></p>
+</div>
+
 
 </body>
 </html>

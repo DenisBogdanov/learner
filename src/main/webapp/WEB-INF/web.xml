@@ -6,16 +6,29 @@
 
   <display-name>Learner</display-name>
 
+  
+  <!--Users-->
   <servlet>
     <servlet-name>userServlet</servlet-name>
     <servlet-class>ru.bogdanov.learner.web.UserServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>userServlet</servlet-name>
     <url-pattern>/users</url-pattern>
   </servlet-mapping>
-
+  
+  <!--Lessons-->
+  <servlet>
+    <servlet-name>lessonServlet</servlet-name>
+    <servlet-class>ru.bogdanov.learner.web.LessonServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>lessonServlet</servlet-name>
+    <url-pattern>/lessons</url-pattern>
+  </servlet-mapping>
+  
+  
 
 </web-app>

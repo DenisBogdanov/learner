@@ -18,6 +18,22 @@ public class LessonWithGoal {
         this.goalAchieved = goalAchieved;
     }
 
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public boolean isGoalAchieved() {
+        return goalAchieved;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("LessonWithGoal{");

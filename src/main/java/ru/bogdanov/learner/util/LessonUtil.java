@@ -10,26 +10,34 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
  * Denis, 16.09.2018
  */
 public class LessonUtil {
-    public static void main(String[] args) {
-        List<Lesson> lessons = Arrays.asList(
-                new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 14, 8, 30), "Java", 60),
-                new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 14, 21, 30), "Java", 30),
-                new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 12, 30), "Java", 60),
-                new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 16, 30), "Java", 60),
-                new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 19, 0), "Java", 60)
-        );
 
-        List<LessonWithGoal> lessonsWithGoal = getWithGoal(lessons, LocalTime.of(7, 0), LocalTime.of(17, 0), 120);
-        lessonsWithGoal.forEach(System.out::println);
+    public static final int DEFAULT_DAILY_GOAL = 120;
+
+    public static final List<Lesson> LESSONS = Arrays.asList(
+            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 14, 8, 30), "Java", 60),
+            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 14, 21, 30), "Java", 30),
+            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 12, 30), "Java", 60),
+            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 16, 30), "Java", 60),
+            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 19, 0), "Java", 60)
+    );
+
+    public static List<LessonWithGoal> getWithGoal(List<Lesson> lessons, int dailyGoal) {
+        return getFilteredByTimeWithGoal(lessons, dailyGoal, lesson -> true);
     }
 
-    public static List<LessonWithGoal> getWithGoal(List<Lesson> lessons, LocalTime startTime, LocalTime endTime, int dailyGoal) {
+    public static List<LessonWithGoal> getFilteredByTimeWithGoal(List<Lesson> lessons, LocalTime startTime, LocalTime endTime, int dailyGoal) {
+        return getFilteredByTimeWithGoal(lessons, dailyGoal,
+                lesson -> DateTimeUtil.isBetween(lesson.getTime(), startTime, endTime));
+    }
+
+    public static List<LessonWithGoal> getFilteredByTimeWithGoal(List<Lesson> lessons, int dailyGoal, Predicate<Lesson> filter) {
 
         Map<LocalDate, Integer> lessonsDurationByDate = lessons.stream()
                 .collect(
@@ -37,12 +45,15 @@ public class LessonUtil {
                 );
 
         return lessons.stream()
-                .filter(lesson -> TimeUtil.isBetween(lesson.getTime(), startTime, endTime))
-                .map(lesson ->
-                        new LessonWithGoal(lesson.getStartDateTime(),
-                                lesson.getDescription(),
-                                lesson.getDuration(),
-                                lessonsDurationByDate.get(lesson.getDate()) >= dailyGoal))
+                .filter(filter)
+                .map(lesson -> createLessonWithGoal(lesson, lessonsDurationByDate.get(lesson.getDate()) > dailyGoal))
                 .collect(Collectors.toList());
+    }
+
+    private static LessonWithGoal createLessonWithGoal(Lesson lesson, boolean goalAchieved) {
+        return new LessonWithGoal(lesson.getStartDateTime(),
+                lesson.getDescription(),
+                lesson.getDuration(),
+                goalAchieved);
     }
 }
