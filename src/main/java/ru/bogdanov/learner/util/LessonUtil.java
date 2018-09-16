@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -28,16 +29,16 @@ public class LessonUtil {
             new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 19, 0), "Java", 60)
     );
 
-    public static List<LessonWithGoal> getWithGoal(List<Lesson> lessons, int dailyGoal) {
+    public static List<LessonWithGoal> getWithGoal(Collection<Lesson> lessons, int dailyGoal) {
         return getFilteredByTimeWithGoal(lessons, dailyGoal, lesson -> true);
     }
 
-    public static List<LessonWithGoal> getFilteredByTimeWithGoal(List<Lesson> lessons, LocalTime startTime, LocalTime endTime, int dailyGoal) {
+    public static List<LessonWithGoal> getFilteredByTimeWithGoal(Collection<Lesson> lessons, LocalTime startTime, LocalTime endTime, int dailyGoal) {
         return getFilteredByTimeWithGoal(lessons, dailyGoal,
                 lesson -> DateTimeUtil.isBetween(lesson.getTime(), startTime, endTime));
     }
 
-    public static List<LessonWithGoal> getFilteredByTimeWithGoal(List<Lesson> lessons, int dailyGoal, Predicate<Lesson> filter) {
+    public static List<LessonWithGoal> getFilteredByTimeWithGoal(Collection<Lesson> lessons, int dailyGoal, Predicate<Lesson> filter) {
 
         Map<LocalDate, Integer> lessonsDurationByDate = lessons.stream()
                 .collect(
@@ -51,7 +52,8 @@ public class LessonUtil {
     }
 
     private static LessonWithGoal createLessonWithGoal(Lesson lesson, boolean goalAchieved) {
-        return new LessonWithGoal(lesson.getStartDateTime(),
+        return new LessonWithGoal(lesson.getId(),
+                lesson.getStartDateTime(),
                 lesson.getDescription(),
                 lesson.getDuration(),
                 goalAchieved);
