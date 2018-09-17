@@ -3,9 +3,10 @@ package ru.bogdanov.learner.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.bogdanov.learner.model.Lesson;
-import ru.bogdanov.learner.repository.mock.InMemoryLessonRepositoryImpl;
 import ru.bogdanov.learner.repository.LessonRepository;
+import ru.bogdanov.learner.repository.mock.InMemoryLessonRepositoryImpl;
 import ru.bogdanov.learner.util.LessonUtil;
+import ru.bogdanov.learner.web.user.SecurityUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,20 +38,20 @@ public class LessonServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 LOGGER.info("Delete {}", id);
-                repository.delete(id);
+                repository.delete(id, SecurityUtil.authUserId());
                 response.sendRedirect("lessons");
                 break;
             case "create":
             case "update":
                 final Lesson lesson = "create".equals(action) ?
                         new Lesson(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 30)
-                        : repository.get(getId(request));
+                        : repository.get(getId(request), SecurityUtil.authUserId());
                 request.setAttribute("lesson", lesson);
                 request.getRequestDispatcher("/lesson-form.jsp").forward(request, response);
                 break;
             case "getAll":
                 LOGGER.info("getAll");
-                request.setAttribute("lessons", LessonUtil.getWithGoal(repository.getAll(), LessonUtil.DEFAULT_DAILY_GOAL));
+                request.setAttribute("lessons", LessonUtil.getWithGoal(repository.getAll(SecurityUtil.authUserId()), LessonUtil.DEFAULT_DAILY_GOAL));
                 request.getRequestDispatcher("/lessons.jsp").forward(request, response);
                 break;
         }
@@ -67,7 +68,7 @@ public class LessonServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("duration")));
 
         LOGGER.info(lesson.isNew() ? "Create {}" : "Update {}", lesson);
-        repository.save(lesson);
+        repository.save(lesson, SecurityUtil.authUserId());
         response.sendRedirect("lessons");
     }
 

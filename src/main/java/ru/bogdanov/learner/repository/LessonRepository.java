@@ -2,18 +2,27 @@ package ru.bogdanov.learner.repository;
 
 import ru.bogdanov.learner.model.Lesson;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Denis, 16.09.2018
  */
 public interface LessonRepository {
 
-    Collection<Lesson> getAll();
+    // null if updated lesson doesn't belong to user
+    Lesson save(Lesson lesson, int userId);
 
-    Lesson save(Lesson lesson);
+    // false if lesson doesn't belong to user
+    boolean delete(int id, int userId);
 
-    void delete(int id);
+    // null if lesson doesn't belong to user
+    Lesson get(int id, int userId);
 
-    Lesson get(int id);
+    // ORDERED dateTime desc
+    Collection<Lesson> getAll(int userId);
+
+    // ORDERED dateTime desc
+    List<Lesson> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
 }
