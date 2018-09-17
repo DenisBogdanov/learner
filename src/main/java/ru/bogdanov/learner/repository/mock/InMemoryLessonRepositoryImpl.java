@@ -1,6 +1,7 @@
-package ru.bogdanov.learner.repository;
+package ru.bogdanov.learner.repository.mock;
 
 import ru.bogdanov.learner.model.Lesson;
+import ru.bogdanov.learner.repository.LessonRepository;
 import ru.bogdanov.learner.util.LessonUtil;
 
 import java.util.Collection;

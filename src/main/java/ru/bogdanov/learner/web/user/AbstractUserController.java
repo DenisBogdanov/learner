@@ -2,6 +2,7 @@ package ru.bogdanov.learner.web.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.bogdanov.learner.model.User;
 import ru.bogdanov.learner.service.UserService;
 
@@ -16,6 +17,7 @@ import static ru.bogdanov.learner.util.ValidationUtil.checkNew;
 public abstract class AbstractUserController {
     protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractUserController.class);
 
+    @Autowired
     private UserService service;
 
     public List<User> getAll() {

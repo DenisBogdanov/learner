@@ -1,5 +1,7 @@
 package ru.bogdanov.learner.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.bogdanov.learner.exception.NotFoundException;
 import ru.bogdanov.learner.model.User;
 import ru.bogdanov.learner.repository.UserRepository;
@@ -12,8 +14,10 @@ import static ru.bogdanov.learner.util.ValidationUtil.checkNotFoundWithId;
 /**
  * Denis, 16.09.2018
  */
+@Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository repository;
 
     @Override

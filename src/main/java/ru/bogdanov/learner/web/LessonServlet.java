@@ -3,7 +3,7 @@ package ru.bogdanov.learner.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.bogdanov.learner.model.Lesson;
-import ru.bogdanov.learner.repository.InMemoryLessonRepositoryImpl;
+import ru.bogdanov.learner.repository.mock.InMemoryLessonRepositoryImpl;
 import ru.bogdanov.learner.repository.LessonRepository;
 import ru.bogdanov.learner.util.LessonUtil;
 
