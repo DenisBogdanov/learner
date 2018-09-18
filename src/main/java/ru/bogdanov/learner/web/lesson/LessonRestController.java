@@ -9,7 +9,7 @@ import ru.bogdanov.learner.service.LessonService;
 import ru.bogdanov.learner.to.LessonWithGoal;
 import ru.bogdanov.learner.util.DateTimeUtil;
 import ru.bogdanov.learner.util.LessonUtil;
-import ru.bogdanov.learner.web.user.SecurityUtil;
+import ru.bogdanov.learner.web.SecurityUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
