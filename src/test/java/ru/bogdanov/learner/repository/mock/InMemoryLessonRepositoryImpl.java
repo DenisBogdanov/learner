@@ -15,8 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static ru.bogdanov.learner.repository.mock.InMemoryUserRepositoryImpl.ADMIN_ID;
-import static ru.bogdanov.learner.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
+import static ru.bogdanov.learner.UserTestData.ADMIN_ID;
+import static ru.bogdanov.learner.UserTestData.USER_ID;
 
 
 /**

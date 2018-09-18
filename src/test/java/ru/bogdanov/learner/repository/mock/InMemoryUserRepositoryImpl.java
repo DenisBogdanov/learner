@@ -1,6 +1,7 @@
 package ru.bogdanov.learner.repository.mock;
 
 import org.springframework.stereotype.Repository;
+import ru.bogdanov.learner.UserTestData;
 import ru.bogdanov.learner.model.User;
 import ru.bogdanov.learner.repository.UserRepository;
 
@@ -11,17 +12,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static ru.bogdanov.learner.UserTestData.ADMIN;
+import static ru.bogdanov.learner.UserTestData.USER;
+
 /**
  * Denis, 17.09.2018
  */
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
 
-    public static final int USER_ID = 1;
-    public static final int ADMIN_ID = 2;
 
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
-    private AtomicInteger id = new AtomicInteger(0);
+    private AtomicInteger id = new AtomicInteger(100);
+
+    public void init() {
+        repository.clear();
+        repository.put(UserTestData.USER_ID, USER);
+        repository.put(UserTestData.ADMIN_ID, ADMIN);
+    }
 
     @Override
     public List<User> getAll() {
