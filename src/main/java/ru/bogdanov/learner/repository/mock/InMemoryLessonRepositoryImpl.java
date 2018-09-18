@@ -1,5 +1,6 @@
 package ru.bogdanov.learner.repository.mock;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import ru.bogdanov.learner.model.Lesson;
 import ru.bogdanov.learner.repository.LessonRepository;
@@ -21,6 +22,7 @@ import static ru.bogdanov.learner.repository.mock.InMemoryUserRepositoryImpl.USE
 /**
  * Denis, 16.09.2018
  */
+@Repository
 public class InMemoryLessonRepositoryImpl implements LessonRepository {
 
     // Map userId -> (lessonId -> lesson)
@@ -59,7 +61,7 @@ public class InMemoryLessonRepositoryImpl implements LessonRepository {
     }
 
     @Override
-    public Collection<Lesson> getAll(int userId) {
+    public List<Lesson> getAll(int userId) {
         return getAllFiltered(userId, lesson -> true);
     }
 

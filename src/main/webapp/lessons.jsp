@@ -39,7 +39,7 @@
     </tr>
 
     <c:forEach items="${lessons}" var="lesson">
-      <jsp:useBean id="lesson" scope="page" type="ru.bogdanov.learner.model.LessonWithGoal"/>
+      <jsp:useBean id="lesson" scope="page" type="ru.bogdanov.learner.to.LessonWithGoal"/>
       <tr class="${lesson.goalAchieved ? '' : 'not-'}achieved">
         <td>${fn:formatDateTime(lesson.startDateTime)}</td>
         <td>${lesson.description}</td>

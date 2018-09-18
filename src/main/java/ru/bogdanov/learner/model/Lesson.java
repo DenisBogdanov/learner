@@ -7,8 +7,7 @@ import java.time.LocalTime;
 /**
  * Denis, 16.09.2018
  */
-public class Lesson {
-    private Integer id;
+public class Lesson extends AbstractBaseEntity {
     private final LocalDateTime startDateTime;
     private final String description;
     private final int duration;
@@ -18,18 +17,10 @@ public class Lesson {
     }
 
     public Lesson(Integer id, LocalDateTime startDateTime, String description, int duration) {
-        this.id = id;
+        super(id);
         this.startDateTime = startDateTime;
         this.description = description;
         this.duration = duration;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public LocalDateTime getStartDateTime() {
@@ -50,10 +41,6 @@ public class Lesson {
 
     public LocalTime getTime() {
         return startDateTime.toLocalTime();
-    }
-
-    public boolean isNew() {
-        return id == null;
     }
 
     @Override

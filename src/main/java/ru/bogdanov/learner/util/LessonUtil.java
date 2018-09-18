@@ -1,7 +1,7 @@
 package ru.bogdanov.learner.util;
 
 import ru.bogdanov.learner.model.Lesson;
-import ru.bogdanov.learner.model.LessonWithGoal;
+import ru.bogdanov.learner.to.LessonWithGoal;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +33,7 @@ public class LessonUtil {
         return getFilteredByTimeWithGoal(lessons, dailyGoal, lesson -> true);
     }
 
-    public static List<LessonWithGoal> getFilteredByTimeWithGoal(Collection<Lesson> lessons, LocalTime startTime, LocalTime endTime, int dailyGoal) {
+    public static List<LessonWithGoal> getFilteredByTimeWithGoal(Collection<Lesson> lessons, int dailyGoal, LocalTime startTime, LocalTime endTime) {
         return getFilteredByTimeWithGoal(lessons, dailyGoal,
                 lesson -> DateTimeUtil.isBetween(lesson.getTime(), startTime, endTime));
     }

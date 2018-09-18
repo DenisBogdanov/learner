@@ -18,7 +18,7 @@
 <body>
 
 <div>
-  <h1>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h1>
+  <h1>${param.action == 'create' ? 'Create Lesson' : 'Edit Lesson'}</h1>
   <hr>
   <jsp:useBean id="lesson" type="ru.bogdanov.learner.model.Lesson" scope="request"/>
   <form method="post" action="lessons">

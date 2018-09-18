@@ -21,7 +21,7 @@ public interface LessonRepository {
     Lesson get(int id, int userId);
 
     // ORDERED dateTime desc
-    Collection<Lesson> getAll(int userId);
+    List<Lesson> getAll(int userId);
 
     // ORDERED dateTime desc
     List<Lesson> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);

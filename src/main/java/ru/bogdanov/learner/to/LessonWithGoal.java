@@ -1,4 +1,4 @@
-package ru.bogdanov.learner.model;
+package ru.bogdanov.learner.to;
 
 import java.time.LocalDateTime;
 
@@ -42,13 +42,11 @@ public class LessonWithGoal {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("LessonWithGoal{");
-        sb.append("id=").append(id);
-        sb.append(", startDateTime=").append(startDateTime);
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", duration=").append(duration);
-        sb.append(", goalAchieved=").append(goalAchieved);
-        sb.append('}');
-        return sb.toString();
+        return "LessonWithGoal{" + "id=" + id +
+                ", startDateTime=" + startDateTime +
+                ", description='" + description + '\'' +
+                ", duration=" + duration +
+                ", goalAchieved=" + goalAchieved +
+                '}';
     }
 }
