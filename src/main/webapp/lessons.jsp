@@ -4,29 +4,41 @@
 <html>
 <head>
   <title>Lessons</title>
-  <style>
-    .achieved {
-      color: green;
-    }
-
-    .not-achieved {
-      color: red;
-    }
-
-    table {
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid black;
-      padding: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div>
   <h1>Lessons</h1>
+
+  <form method="post" action="lessons?action=filter">
+
+    <table>
+      <tr>
+        <td><label for="startDate">From Date:</label></td>
+        <td><input type="date" name="startDate" value="${param.startDate}" id="startDate"></td>
+      </tr>
+      <tr>
+        <td><label for="endDate">To Date:</label></td>
+        <td><input type="date" name="endDate" value="${param.endDate}" id="endDate"></td>
+      </tr>
+      <tr>
+        <td><label for="startTime">From Time:</label></td>
+        <td><input type="time" name="startTime" value="${param.startTime}" id="startTime"></td>
+      </tr>
+      <tr>
+        <td><label for="endTime">To Time:</label></td>
+        <td><input type="time" name="endTime" value="${param.endTime}" id="endTime"></td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">Filter</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+  <hr/>
+
   <a href="lessons?action=create">Add Lesson</a>
 
   <table>
@@ -40,7 +52,7 @@
 
     <c:forEach items="${lessons}" var="lesson">
       <jsp:useBean id="lesson" scope="page" type="ru.bogdanov.learner.to.LessonWithGoal"/>
-      <tr class="${lesson.goalAchieved ? '' : 'not-'}achieved">
+      <tr data-goalAchieved="${lesson.goalAchieved}">
         <td>${fn:formatDateTime(lesson.startDateTime)}</td>
         <td>${lesson.description}</td>
         <td>${lesson.duration}</td>

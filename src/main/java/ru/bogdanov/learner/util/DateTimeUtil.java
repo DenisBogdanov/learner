@@ -1,5 +1,7 @@
 package ru.bogdanov.learner.util;
 
+import org.springframework.util.StringUtils;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,5 +25,13 @@ public class DateTimeUtil {
 
     public static String format(LocalDateTime ldt) {
         return ldt == null ? "" : ldt.format(DATE_TIME_FORMATTER);
+    }
+
+    public static LocalDate parseLocalDate(String str) {
+        return StringUtils.isEmpty(str) ? null : LocalDate.parse(str);
+    }
+
+    public static LocalTime parseLocalTime(String str) {
+        return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
     }
 }

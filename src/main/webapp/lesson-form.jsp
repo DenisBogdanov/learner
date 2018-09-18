@@ -4,15 +4,7 @@
 <html>
 <head>
   <title>Add Lesson</title>
-  <style>
-    table {
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>

@@ -16,9 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
+import static ru.bogdanov.learner.util.DateTimeUtil.parseLocalDate;
+import static ru.bogdanov.learner.util.DateTimeUtil.parseLocalTime;
 
 /**
  * Denis, 16.09.2018
@@ -69,17 +74,29 @@ public class LessonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        if (action == null) {
+            Lesson lesson = new Lesson(LocalDateTime.parse(request.getParameter("startDateTime")),
+                    request.getParameter("description"),
+                    Integer.parseInt(request.getParameter("duration")));
 
-        Lesson lesson = new Lesson(LocalDateTime.parse(request.getParameter("startDateTime")),
-                request.getParameter("description"),
-                Integer.parseInt(request.getParameter("duration")));
+            if (request.getParameter("id").isEmpty()) {
+                lessonController.create(lesson);
+            } else {
+                lessonController.update(lesson, getId(request));
+            }
+            response.sendRedirect("lessons");
 
-        if (request.getParameter("id").isEmpty()) {
-            lessonController.create(lesson);
-        } else {
-            lessonController.update(lesson, getId(request));
+        } else if ("filter".equals(action)) {
+            LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+            LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+            LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+            LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+            request.setAttribute("lessons", lessonController.getBetween(startDate, startTime, endDate, endTime));
+            request.getRequestDispatcher("/lessons.jsp").forward(request, response);
         }
-        response.sendRedirect("lessons");
+
+
     }
 
     private int getId(HttpServletRequest request) {

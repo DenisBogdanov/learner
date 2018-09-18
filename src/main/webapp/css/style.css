@@ -1,0 +1,16 @@
+tr[data-goalAchieved="true"] {
+    color: green;
+}
+
+tr[data-goalAchieved="false"] {
+    color: red;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
