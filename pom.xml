@@ -19,6 +19,9 @@
 
     <spring.version>5.0.7.RELEASE</spring.version>
 
+    <!-- DB -->
+    <postgresql.version>42.2.2</postgresql.version>
+
     <!-- Logging -->
     <logback.version>1.2.3</logback.version>
     <slf4j.version>1.7.25</slf4j.version>
@@ -75,6 +78,14 @@
     </dependency>
 
 
+    <!-- DataBase -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+    </dependency>
+
+
     <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -89,6 +100,7 @@
       <version>${logback.version}</version>
       <scope>runtime</scope>
     </dependency>
+
 
     <!-- Testing -->
     <dependency>
