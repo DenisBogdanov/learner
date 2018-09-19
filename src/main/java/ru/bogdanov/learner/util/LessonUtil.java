@@ -18,13 +18,16 @@ public class LessonUtil {
 
     public static final int DEFAULT_DAILY_GOAL = 120;
 
+    private LessonUtil() {
+    }
+
     public static List<LessonWithGoal> getWithGoal(Collection<Lesson> lessons, int dailyGoal) {
         return getFilteredByTimeWithGoal(lessons, dailyGoal, lesson -> true);
     }
 
     public static List<LessonWithGoal> getFilteredByTimeWithGoal(Collection<Lesson> lessons, int dailyGoal, LocalTime startTime, LocalTime endTime) {
         return getFilteredByTimeWithGoal(lessons, dailyGoal,
-                lesson -> DateTimeUtil.isBetween(lesson.getTime(), startTime, endTime));
+                lesson -> Util.isBetween(lesson.getTime(), startTime, endTime));
     }
 
     public static List<LessonWithGoal> getFilteredByTimeWithGoal(Collection<Lesson> lessons, int dailyGoal, Predicate<Lesson> filter) {

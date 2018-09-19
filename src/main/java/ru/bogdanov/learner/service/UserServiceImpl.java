@@ -2,6 +2,7 @@ package ru.bogdanov.learner.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.bogdanov.learner.exception.NotFoundException;
 import ru.bogdanov.learner.model.User;
 import ru.bogdanov.learner.repository.UserRepository;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
+        Assert.notNull(user, "user shouldn't be null");
         return repository.save(user);
     }
 
@@ -37,6 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) throws NotFoundException {
+        Assert.notNull(email, "email shouldn't be null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
+        Assert.notNull(user, "user shouldn't be null");
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 }

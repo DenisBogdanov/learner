@@ -1,16 +1,17 @@
 package ru.bogdanov.learner.repository.mock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import ru.bogdanov.learner.model.Lesson;
 import ru.bogdanov.learner.repository.LessonRepository;
-import ru.bogdanov.learner.util.DateTimeUtil;
+import ru.bogdanov.learner.util.Util;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  */
 @Repository
 public class InMemoryLessonRepositoryImpl implements LessonRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InMemoryLessonRepositoryImpl.class);
 
     // Map userId -> (lessonId -> lesson)
     private Map<Integer, Map<Integer, Lesson>> repository = new ConcurrentHashMap<>();
@@ -30,6 +32,7 @@ public class InMemoryLessonRepositoryImpl implements LessonRepository {
 
     @Override
     public Lesson save(Lesson lesson, int userId) {
+        Objects.requireNonNull(lesson);
         Map<Integer, Lesson> lessons = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
         if (lesson.isNew()) {
             lesson.setId(id.incrementAndGet());
@@ -37,6 +40,16 @@ public class InMemoryLessonRepositoryImpl implements LessonRepository {
             return lesson;
         }
         return lessons.computeIfPresent(lesson.getId(), (id, oldLesson) -> lesson);
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        LOGGER.info("+++ PostConstruct");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        LOGGER.info("+++ PreDestroy");
     }
 
     @Override
@@ -58,7 +71,9 @@ public class InMemoryLessonRepositoryImpl implements LessonRepository {
 
     @Override
     public List<Lesson> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return getAllFiltered(userId, lesson -> DateTimeUtil.isBetween(lesson.getStartDateTime(), startDateTime, endDateTime));
+        Objects.requireNonNull(startDateTime);
+        Objects.requireNonNull(endDateTime);
+        return getAllFiltered(userId, lesson -> Util.isBetween(lesson.getStartDateTime(), startDateTime, endDateTime));
     }
 
     private List<Lesson> getAllFiltered(int userId, Predicate<Lesson> filter) {

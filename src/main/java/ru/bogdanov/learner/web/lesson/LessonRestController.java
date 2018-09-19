@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.bogdanov.learner.util.Util.orElse;
 import static ru.bogdanov.learner.util.ValidationUtil.assureIdConsistent;
 import static ru.bogdanov.learner.util.ValidationUtil.checkNew;
 
@@ -71,13 +72,10 @@ public class LessonRestController {
         LOGGER.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
 
         List<Lesson> lessonsFilteredByDates = service.getBetweenDates(
-                startDate != null ? startDate : DateTimeUtil.MIN_DATE,
-                endDate != null ? endDate : DateTimeUtil.MAX_DATE, userId);
-
+                orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE), userId);
         return LessonUtil.getFilteredByTimeWithGoal(lessonsFilteredByDates,
                 SecurityUtil.authUserDailyGoal(),
-                startTime != null ? startTime : LocalTime.MIN,
-                endTime != null ? endTime : LocalTime.MAX
+                orElse(startTime, LocalTime.MIN), orElse(endTime, LocalTime.MAX)
         );
     }
 }
