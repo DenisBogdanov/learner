@@ -8,9 +8,12 @@ import java.time.LocalTime;
  * Denis, 16.09.2018
  */
 public class Lesson extends AbstractBaseEntity {
-    private final LocalDateTime startDateTime;
-    private final String description;
-    private final int duration;
+    private LocalDateTime startDateTime;
+    private String description;
+    private int duration;
+
+    public Lesson() {
+    }
 
     public Lesson(LocalDateTime startDateTime, String description, int duration) {
         this(null, startDateTime, description, duration);
@@ -27,12 +30,24 @@ public class Lesson extends AbstractBaseEntity {
         return startDateTime;
     }
 
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getDuration() {
         return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public LocalDate getDate() {

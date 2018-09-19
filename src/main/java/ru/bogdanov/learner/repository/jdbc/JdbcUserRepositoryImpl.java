@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -51,19 +51,12 @@ public class JdbcUserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("id", user.getId())
-                .addValue("name", user.getName())
-                .addValue("email", user.getEmail())
-                .addValue("password", user.getPassword())
-                .addValue("registrationDate", user.getRegistrationDate())
-                .addValue("enabled", user.isEnabled())
-                .addValue("dailyGoal", user.getDailyGoal());
+        BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
         if (user.isNew()) {
-            Number newKey = jdbcInsert.executeAndReturnKey(map);
+            Number newKey = jdbcInsert.executeAndReturnKey(parameterSource);
             user.setId(newKey.intValue());
-        } else if (namedParameterJdbcTemplate.update(SQL_UPDATE, map) == 0) {
+        } else if (namedParameterJdbcTemplate.update(SQL_UPDATE, parameterSource) == 0) {
             return null;
         }
         return user;
