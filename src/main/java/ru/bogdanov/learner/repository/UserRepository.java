@@ -9,8 +9,6 @@ import java.util.List;
  */
 public interface UserRepository {
 
-    List<User> getAll();
-
     User save(User user);
 
     // false if not found
@@ -21,4 +19,6 @@ public interface UserRepository {
 
     // null if not found
     User getByEmail(String email);
+
+    List<User> getAll();
 }
