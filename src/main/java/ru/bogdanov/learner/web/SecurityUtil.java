@@ -1,5 +1,7 @@
 package ru.bogdanov.learner.web;
 
+import ru.bogdanov.learner.model.AbstractBaseEntity;
+
 import static ru.bogdanov.learner.util.LessonUtil.DEFAULT_DAILY_GOAL;
 
 /**
@@ -7,7 +9,7 @@ import static ru.bogdanov.learner.util.LessonUtil.DEFAULT_DAILY_GOAL;
  */
 public class SecurityUtil {
 
-    private static int id = 1;
+    private static int id = AbstractBaseEntity.START_SEQ;
 
     public static int authUserId() {
         return id;

@@ -29,7 +29,7 @@ public class LessonServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         lessonController = springContext.getBean(LessonRestController.class);
     }
 
