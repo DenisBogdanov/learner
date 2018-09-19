@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import ru.bogdanov.learner.model.User;
 import ru.bogdanov.learner.repository.UserRepository;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -41,11 +40,11 @@ public class JdbcUserRepositoryImpl implements UserRepository {
     private final SimpleJdbcInsert jdbcInsert;
 
     @Autowired
-    public JdbcUserRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcUserRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 
-        this.jdbcInsert = new SimpleJdbcInsert(dataSource)
+        this.jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("users")
                 .usingGeneratedKeyColumns("id");
     }

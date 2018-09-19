@@ -25,7 +25,7 @@ public interface LessonService {
 
     List<Lesson> getAll(int userId);
 
-    Lesson update(Lesson lesson, int userId) throws NotFoundException;
+    void update(Lesson lesson, int userId) throws NotFoundException;
 
     Lesson create(Lesson lesson, int userId);
 }

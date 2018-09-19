@@ -14,7 +14,7 @@ import ru.bogdanov.learner.web.user.AdminRestController;
 
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static ru.bogdanov.learner.UserTestData.ADMIN;
 
 /**
@@ -36,7 +36,7 @@ public class InMemoryAdminRestControllerSpringTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void delete() throws Exception {
         controller.delete(UserTestData.USER_ID);
         Collection<User> users = controller.getAll();
         assertEquals(users.size(), 1);
@@ -44,7 +44,7 @@ public class InMemoryAdminRestControllerSpringTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void testDeleteNotFound() {
+    public void deletedNotFound() throws Exception {
         controller.delete(10);
     }
 }

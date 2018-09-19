@@ -45,8 +45,8 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lesson update(Lesson lesson, int userId) throws NotFoundException {
-        return checkNotFoundWithId(repository.save(lesson, userId), lesson.getId());
+    public void update(Lesson lesson, int userId) throws NotFoundException {
+        checkNotFoundWithId(repository.save(lesson, userId), lesson.getId());
     }
 
     @Override
