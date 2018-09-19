@@ -4,10 +4,7 @@ import ru.bogdanov.learner.model.Lesson;
 import ru.bogdanov.learner.to.LessonWithGoal;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +17,6 @@ import java.util.stream.Collectors;
 public class LessonUtil {
 
     public static final int DEFAULT_DAILY_GOAL = 120;
-
-    public static final List<Lesson> LESSONS = Arrays.asList(
-            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 14, 8, 30), "Java", 60),
-            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 14, 21, 30), "Java", 30),
-            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 12, 30), "Java", 60),
-            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 16, 30), "Java", 60),
-            new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 15, 19, 0), "Java", 60)
-    );
 
     public static List<LessonWithGoal> getWithGoal(Collection<Lesson> lessons, int dailyGoal) {
         return getFilteredByTimeWithGoal(lessons, dailyGoal, lesson -> true);

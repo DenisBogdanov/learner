@@ -5,18 +5,16 @@ import org.springframework.util.CollectionUtils;
 import ru.bogdanov.learner.model.Lesson;
 import ru.bogdanov.learner.repository.LessonRepository;
 import ru.bogdanov.learner.util.DateTimeUtil;
-import ru.bogdanov.learner.util.LessonUtil;
 
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static ru.bogdanov.learner.UserTestData.ADMIN_ID;
-import static ru.bogdanov.learner.UserTestData.USER_ID;
 
 
 /**
@@ -28,13 +26,6 @@ public class InMemoryLessonRepositoryImpl implements LessonRepository {
     // Map userId -> (lessonId -> lesson)
     private Map<Integer, Map<Integer, Lesson>> repository = new ConcurrentHashMap<>();
     private AtomicInteger id = new AtomicInteger(0);
-
-    {
-        LessonUtil.LESSONS.forEach(lesson -> save(lesson, USER_ID));
-
-        save(new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 16, 14, 0), "Java", 30), ADMIN_ID);
-        save(new Lesson(LocalDateTime.of(2018, Month.SEPTEMBER, 16, 21, 0), "Java", 60), ADMIN_ID);
-    }
 
 
     @Override
