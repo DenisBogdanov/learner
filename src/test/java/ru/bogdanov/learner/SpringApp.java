@@ -20,7 +20,7 @@ import java.util.List;
 public class SpringApp {
     public static void main(String[] args) {
 
-        try (ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml");) {
+        try (ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/mock.xml");) {
 
             System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
 

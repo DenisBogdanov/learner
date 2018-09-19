@@ -20,7 +20,7 @@ import static ru.bogdanov.learner.UserTestData.ADMIN;
 /**
  * Denis, 18.09.2018
  */
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/mock.xml"})
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
