@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface UserService {
 
-    List<User> getAll();
-
     User create(User user);
 
     void delete(int id) throws NotFoundException;
@@ -21,4 +19,6 @@ public interface UserService {
     User getByEmail(String email) throws NotFoundException;
 
     void update(User user);
+
+    List<User> getAll();
 }
