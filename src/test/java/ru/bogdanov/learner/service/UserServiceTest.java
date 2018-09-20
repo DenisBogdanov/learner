@@ -41,10 +41,10 @@ public class UserServiceTest {
 
     @Test
     public void create() {
-        User newUser = new User(null, "a", "a@b.c", "p", 90, false, new Date(), Collections.singleton(Role.ROLE_USER));
+        User newUser = new User(null, "newUser", "a@b.c", "newPassword", 90, false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(newUser);
         newUser.setId(created.getId());
-        assertMatch(service.getAll(), newUser, ADMIN, USER);
+        assertMatch(service.getAll(), ADMIN, newUser, USER);
     }
 
     @Test
