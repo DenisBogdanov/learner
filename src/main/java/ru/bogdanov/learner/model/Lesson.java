@@ -1,5 +1,7 @@
 package ru.bogdanov.learner.model;
 
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,9 +10,13 @@ import java.time.LocalTime;
  * Denis, 16.09.2018
  */
 public class Lesson extends AbstractBaseEntity {
+
     private LocalDateTime startDateTime;
     private String description;
     private int duration;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Lesson() {
     }
@@ -56,6 +62,14 @@ public class Lesson extends AbstractBaseEntity {
 
     public LocalTime getTime() {
         return startDateTime.toLocalTime();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
