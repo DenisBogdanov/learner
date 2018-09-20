@@ -15,10 +15,19 @@ import static ru.bogdanov.learner.util.LessonUtil.DEFAULT_DAILY_GOAL;
 /**
  * Denis, 16.09.2018
  */
+@NamedQueries({
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
+        @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
+})
 @Entity
 @Table(name = "users", uniqueConstraints =
         {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 public class User extends AbstractNamedEntity {
+
+    public static final String DELETE = "User.delete";
+    public static final String BY_EMAIL = "User.getByEmail";
+    public static final String ALL_SORTED = "User.getAllSorted";
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -34,7 +43,7 @@ public class User extends AbstractNamedEntity {
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled = true;
 
-    @Column(name = "registered", columnDefinition = "timestamp default now()")
+    @Column(name = "registration_date", columnDefinition = "timestamp default now()")
     @NotNull
     private Date registrationDate = new Date();
 
@@ -44,7 +53,7 @@ public class User extends AbstractNamedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @Column(name = "calories_per_day", columnDefinition = "int default 60")
+    @Column(name = "daily_goal", columnDefinition = "int default 60")
     @Range(min = 10, max = 1000)
     private int dailyGoal = DEFAULT_DAILY_GOAL;
 

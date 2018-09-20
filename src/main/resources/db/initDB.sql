@@ -37,5 +37,5 @@ CREATE TABLE lessons (
   duration        INT       NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX meals_unique_user_datetime_idx
+CREATE UNIQUE INDEX lessons_unique_user_datetime_idx
   ON lessons (user_id, start_date_time);
