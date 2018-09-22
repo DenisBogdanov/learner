@@ -36,7 +36,7 @@ import static ru.bogdanov.learner.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class LessonServiceTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LessonServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("result");
 
     private static StringBuilder results = new StringBuilder();
 
