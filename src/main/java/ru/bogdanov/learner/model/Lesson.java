@@ -13,10 +13,10 @@ import java.time.LocalTime;
 /**
  * Denis, 16.09.2018
  */
-//@SuppressWarnings("JpaQlInspection")
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-        @NamedQuery(name = Lesson.ALL_SORTED, query = "SELECT l FROM Lesson l WHERE l.user.id=:user_id ORDER BY l.startDateTime DESC"),
-        @NamedQuery(name = Lesson.DELETE, query = "DELETE FROM Lesson l WHERE l.id=:id AND l.user.id=:user_id"),
+        @NamedQuery(name = Lesson.ALL_SORTED, query = "SELECT l FROM Lesson l WHERE l.user.id=:userId ORDER BY l.startDateTime DESC"),
+        @NamedQuery(name = Lesson.DELETE, query = "DELETE FROM Lesson l WHERE l.id=:id AND l.user.id=:userId"),
         @NamedQuery(name = Lesson.GET_BETWEEN, query = "" +
                 "SELECT l FROM Lesson l " +
                 "WHERE l.user.id=:userId AND l.startDateTime BETWEEN :startDateTime AND :endDateTime " +

@@ -1,7 +1,14 @@
 package ru.bogdanov.learner.service;
 
+import org.junit.AfterClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,6 +20,7 @@ import ru.bogdanov.learner.model.Lesson;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.concurrent.TimeUnit;
 
 import static ru.bogdanov.learner.LessonTestData.*;
 import static ru.bogdanov.learner.UserTestData.ADMIN_ID;
@@ -28,6 +36,22 @@ import static ru.bogdanov.learner.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class LessonServiceTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LessonServiceTest.class);
+
+    private static StringBuilder results = new StringBuilder();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Rule
+    public Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        protected void finished(long nanos, Description description) {
+            String result = String.format("\n%-25s %7d", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
+            results.append(result);
+            LOGGER.info(result + " ms\n");
+        }
+    };
 
     @Autowired
     private LessonService service;
@@ -36,14 +60,24 @@ public class LessonServiceTest {
         SLF4JBridgeHandler.install();
     }
 
+    @AfterClass
+    public static void printResult() {
+        LOGGER.info("\n=================================" +
+                "\nTest                 Duration, ms" +
+                "\n=================================" +
+                results +
+                "\n=================================");
+    }
+
     @Test
     public void delete() throws Exception {
         service.delete(LESSON_1_ID, USER_ID);
         assertMatch(service.getAll(USER_ID), LESSON_5, LESSON_4, LESSON_3, LESSON_2);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
         service.delete(LESSON_1_ID, 1);
     }
 
@@ -60,8 +94,9 @@ public class LessonServiceTest {
         assertMatch(actual, ADMIN_LESSON_1);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
         service.get(LESSON_1_ID, ADMIN_ID);
     }
 
@@ -72,8 +107,10 @@ public class LessonServiceTest {
         assertMatch(service.get(LESSON_1_ID, USER_ID), updated);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void updateNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + LESSON_1_ID);
         service.update(LESSON_1, ADMIN_ID);
     }
 
