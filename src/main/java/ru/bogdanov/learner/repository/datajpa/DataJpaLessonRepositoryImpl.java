@@ -24,7 +24,7 @@ public class DataJpaLessonRepositoryImpl implements LessonRepository {
     @Override
     @Transactional
     public Lesson save(Lesson lesson, int userId) {
-        if (lesson.isNew() && get(lesson.getId(), userId) == null) {
+        if (!lesson.isNew() && get(lesson.getId(), userId) == null) {
             return null;
         }
         lesson.setUser(crudUserRepository.getOne(userId));
