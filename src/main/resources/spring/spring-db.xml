@@ -74,7 +74,7 @@
     <!--no pooling-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="org.postgresql.jdbcDriver"
+          p:driverClassName="org.postgresql.Driver"
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>

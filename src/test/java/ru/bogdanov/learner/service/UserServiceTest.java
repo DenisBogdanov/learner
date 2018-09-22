@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.bogdanov.learner.Profiles;
+import ru.bogdanov.learner.ActiveDbProfileResolver;
 import ru.bogdanov.learner.exception.NotFoundException;
 import ru.bogdanov.learner.model.Role;
 import ru.bogdanov.learner.model.User;
@@ -29,7 +29,7 @@ import static ru.bogdanov.learner.UserTestData.*;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class UserServiceTest {
     private static final int VACANT_ID = 1;
 

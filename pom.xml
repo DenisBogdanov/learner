@@ -170,7 +170,7 @@
         </dependency>
       </dependencies>
     </profile>
-
+    
     <profile>
       <id>postgres</id>
       <dependencies>
