@@ -1,7 +1,11 @@
 package ru.bogdanov.learner.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -9,13 +13,40 @@ import java.time.LocalTime;
 /**
  * Denis, 16.09.2018
  */
+//@SuppressWarnings("JpaQlInspection")
+@NamedQueries({
+        @NamedQuery(name = Lesson.ALL_SORTED, query = "SELECT l FROM Lesson l WHERE l.user.id=:user_id ORDER BY l.startDateTime DESC"),
+        @NamedQuery(name = Lesson.DELETE, query = "DELETE FROM Lesson l WHERE l.id=:id AND l.user.id=:user_id"),
+        @NamedQuery(name = Lesson.GET_BETWEEN, query = "" +
+                "SELECT l FROM Lesson l " +
+                "WHERE l.user.id=:userId AND l.startDateTime BETWEEN :startDateTime AND :endDateTime " +
+                "ORDER BY l.startDateTime DESC"),
+})
+@Entity
+@Table(name = "lessons", uniqueConstraints = {@UniqueConstraint(
+        columnNames = {"user_id", "start_date_time"}, name = "lessons_unique_user_datetime_idx")})
 public class Lesson extends AbstractBaseEntity {
 
+    public static final String ALL_SORTED = "Lesson.getAll";
+    public static final String DELETE = "Lesson.delete";
+    public static final String GET_BETWEEN = "Lesson.getBetween";
+
+    @Column(name = "start_date_time", nullable = false)
+    @NotNull
     private LocalDateTime startDateTime;
+
+    @Column(name = "description", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 120)
     private String description;
+
+    @Column(name = "duration", nullable = false)
+    @Range(min = 10, max = 1000)
     private int duration;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
     private User user;
 
     public Lesson() {
