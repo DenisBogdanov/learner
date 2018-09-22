@@ -1,5 +1,7 @@
 package ru.bogdanov.learner.model;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -44,14 +46,13 @@ public abstract class AbstractBaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
         AbstractBaseEntity that = (AbstractBaseEntity) o;
         return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id);
     }
 }
